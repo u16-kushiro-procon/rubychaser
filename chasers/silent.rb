@@ -32,7 +32,7 @@ class SilentCHaser < CHaser
         self.lookDown
       end
     end
-    print 'turn: %d, map size: %d x %d' % [@turn, @map.get_width, @map.get_height]
+    puts 'turn: %d, map size: %d x %d' % [@turn, @map.get_width, @map.get_height]
     print @map.display_text(@position)
   end
 end

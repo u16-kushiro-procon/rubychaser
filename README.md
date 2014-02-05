@@ -1,17 +1,18 @@
-(https://pypi.python.org/pypi/nullpobug.chaser) をRubyで書いたものです．
+https://pypi.python.org/pypi/nullpobug.chaser をRubyで書いたものです．
 
-一部機能に微妙に違いがあります．
+一部機能に微妙な違いがあります．
 
-#動作環境
+##動作環境
 
 * ruby 2.0.0-p353
 
 でしか試してません．
 
-#簡単な使い方
+##簡単な使い方
 
 動かずサーチだけ実行するCHaserクラスを作ってみます．
-現状，chaser/ 以下に作ったファイルしか読み込めません．
+
+現状，オプションで指定するためには chaser/ 以下にファイルを作る必要があります．
 
 ```Ruby:my_chaser.rb
 require_relative 'silent'

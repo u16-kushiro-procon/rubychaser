@@ -14,6 +14,7 @@ end
 FLAG_CONNECTION_CLOSE = 0
 
 class CHaser
+  attr_reader :x, :y
   def initialize(connection, username)
     @connection = connection
     @username = username
@@ -38,9 +39,7 @@ class CHaser
   def receive_info
     result = self.receive
     info = strarr_to_intarr(result)
-    if info[0] == FLAG_CONNECTION_CLOSE
-      raise ConnectionCloseSignal
-    end
+    raise ConnectionCloseSignal if info[0] == FLAG_CONNECTION_CLOSE
     return info[1..info.size-1]
   end
 
@@ -112,6 +111,7 @@ class CHaser
         @map.update_cell([cell_x, cell_y], celltype, @turn)
       end
     end
+
     case direction
     when LEFT
       _update(lambda {|idx| @x - 1 - idx}, lambda {|idx| @y}, info)

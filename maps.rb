@@ -13,19 +13,11 @@ class MapCell
     @history = Array.new
   end
 
-  # def celltype()
-  #   return @celltype
-  # end
-
-  # def turn()
-  #   return @turn
-  # end
-
-  def is_floor()
+  def is_floor
     return @celltype == TYPE_FLOOR
   end
 
-  def is_enemy()
+  def is_enemy
     return @celltype == TYPE_ENEMY
   end
   
@@ -33,14 +25,14 @@ class MapCell
     return @celltype == TYPE_BLOCK
   end
 
-  def is_item()
+  def is_item
     return @celltype == TYPE_ITEM
   end
 
   def update(celltype, turn)
     @history.push([@celltype, @turn])
     # 最大数を超えないように切り詰め
-    #@history = @history[@history.size - MAX_HISTORY_COUNT..@history.size]
+    @history = @history[(@history.size-MAX_HISTORY_COUNT).negative_to_zero..@history.size-1]
     @celltype = celltype
     @turn = turn
   end
@@ -51,7 +43,7 @@ class CHaserMap
 
   def initialize
     @data = { 
-     [0, 0] => TYPE_FLOOR,
+      [0, 0] => TYPE_FLOOR,
     }
     @data[[0, 0]] = MapCell.new(TYPE_FLOOR, 0)
     @width = self.get_width
@@ -161,8 +153,3 @@ class CHaserMap
   end
 end
 
-if __FILE__ == $0
-  cell = MapCell.new(TYPE_FLOOR, 1)
-  cell.update(TYPE_ENEMY, 2)
-  p cell
-end

@@ -1,5 +1,4 @@
 require 'socket'
-BUFSIZE = 4096
 
 class Connection
   def initialize(host, port)
@@ -10,8 +9,8 @@ class Connection
     return @socket.puts(packet)
   end
 
-  def recv()
-    return @socket.gets()
+  def recv
+    return @socket.gets
   end
 end
 

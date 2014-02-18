@@ -38,7 +38,7 @@ class CHaser
 
   def receive_info
     result = self.receive
-    info = strarr_to_intarr(result)
+    info = result.to_intarr
     raise ConnectionCloseSignal if info[0] == FLAG_CONNECTION_CLOSE
     return info[1..info.size-1]
   end
@@ -128,11 +128,11 @@ class CHaser
   # 補助コマンド
   ################
   def username
-    return command(@username)
+    return self.command(@username)
   end
 
   def getReady
-    command('gr')
+    self.command('gr')
     info = self.receive_info
     self._update_map_normal(info)
     return info

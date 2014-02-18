@@ -12,7 +12,8 @@ class Numeric
 end
 
 def chasers_require
-  Dir.glob("./chasers/*.rb").each do |ch|
+  chasers_path = File.expand_path('../chasers', __FILE__)
+  Dir.glob(chasers_path + "/*.rb").each do |ch|
     require ch
   end
 end
@@ -21,12 +22,12 @@ def load_class(str)
   return Object.const_get(str)
 end
 
-def strarr_to_intarr(val)
-  # 文字列をintのリストにする
-  result = Array.new
-  val.each_char { |c|
-    result.push(c.to_i)
-  }
-  #return val.map{ |s| s.to_i } # 文字列にmap使えなかった
-  return result
+class String
+  def to_intarr
+    # 文字列をintのリストにする
+    result = Array.new
+    self.each_char { |c| result.push(c.to_i) }
+    #return val.map{ |s| s.to_i } # 文字列にmap使えなかった
+    return result
+  end
 end

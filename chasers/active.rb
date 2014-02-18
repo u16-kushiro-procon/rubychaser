@@ -55,5 +55,7 @@ class ActiveCHaser < CHaser
         end
       end
     end
+
+    print @map.display_text(@position)
   end
 end

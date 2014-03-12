@@ -12,5 +12,9 @@ class Connection
   def recv
     return @socket.gets
   end
+
+  def close
+    @socket.close
+  end
 end
 

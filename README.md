@@ -7,6 +7,7 @@ https://pypi.python.org/pypi/nullpobug.chaser をRubyで書いたものです．
 ##動作環境
 
 * ruby 2.0.0-p353
+* ruby 2.1.0-p0
 
 でしか試してません．
 

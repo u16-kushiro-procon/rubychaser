@@ -36,6 +36,7 @@ class ActiveCHaser < CHaser
   end
 
   def run(info)
+    # 敵が上下左右のどこかにいればブロックを置く
     if info[1] == TYPE_ENEMY
       self.putUp
     elsif info[3] == TYPE_ENEMY
@@ -48,7 +49,7 @@ class ActiveCHaser < CHaser
       # ランダムで壁のない方向へ
       # 1: 上, 2: 左, 3: 右, 4: 下
       loop do
-        val = rand(4) + 1
+        val = rand(4) + 1 # 1~4の乱数
         result = self.safe_walk(info, val)
         if result
           break
@@ -56,6 +57,6 @@ class ActiveCHaser < CHaser
       end
     end
 
-    print @map.display_text(@position)
+    print @map.display_text(@position) # マップ表示
   end
 end

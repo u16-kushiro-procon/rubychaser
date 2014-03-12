@@ -68,7 +68,7 @@ class CHaser
         @map.update_cell([cell_x, cell_y], celltype, @turn)
       end
     end
-
+    
     case direction
     when LEFT
       # 1列目

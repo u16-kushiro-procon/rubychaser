@@ -43,25 +43,25 @@ class CHaser
     return info[1..info.size-1]
   end
 
-  def _update_map_normal(info)
+  def update_map_normal(info)
     # 通常の周囲8マスの情報でマップを更新
-    def _update(cell_y, line_info)
+    def update(cell_y, line_info)
       line_info.each_with_index do |celltype, idx|
         cell_x = @x - 1 + idx
         @map.update_cell([cell_x, cell_y], celltype, @turn)
       end
     end
     # 1列目
-    _update(@y + 1, info[0..2])
+    update(@y + 1, info[0..2])
     # 2列目
-    _update(@y, info[3..5])
+    update(@y, info[3..5])
     # 3列目
-    _update(@y - 1, info[6..8])
+    update(@y - 1, info[6..8])
   end
 
-  def _update_map_look(info, direction)
+  def update_map_look(info, direction)
     # lookコマンドの情報でマップを更新
-    def _update(func_cell_x, func_cell_y, line_info)
+    def update(func_cell_x, func_cell_y, line_info)
       line_info.each_with_index do |celltype, idx|
         cell_x = func_cell_x.call(idx)
         cell_y = func_cell_y.call(idx)
@@ -72,39 +72,39 @@ class CHaser
     case direction
     when LEFT
       # 1列目
-      _update(lambda {|idx| @x - 3 + idx }, lambda {|idx| @y + 1}, info[0..2])
+      update(lambda {|idx| @x - 3 + idx }, lambda {|idx| @y + 1}, info[0..2])
       # 2列目
-      _update(lambda {|idx| @x - 3 + idx }, lambda {|idx| @y}, info[3..5])
+      update(lambda {|idx| @x - 3 + idx }, lambda {|idx| @y}, info[3..5])
       # 3列目
-      _update(lambda {|idx| @x - 3 + idx }, lambda {|idx| @y - 1}, info[6..8])
+      update(lambda {|idx| @x - 3 + idx }, lambda {|idx| @y - 1}, info[6..8])
     when RIGHT
       # 1列目
-      _update(lambda {|idx| @x + 1 + idx }, lambda {|idx| @y + 1}, info[0..2])
+      update(lambda {|idx| @x + 1 + idx }, lambda {|idx| @y + 1}, info[0..2])
       # 2列目
-      _update(lambda {|idx| @x + 1 + idx }, lambda {|idx| @y}, info[3..5])
+      update(lambda {|idx| @x + 1 + idx }, lambda {|idx| @y}, info[3..5])
       # 3列目
-      _update(lambda {|idx| @x + 1 + idx }, lambda {|idx| @y - 1}, info[6..8])
+      update(lambda {|idx| @x + 1 + idx }, lambda {|idx| @y - 1}, info[6..8])
     when UP
       # 1列目
-      _update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y + 3}, info[0..2])
+      update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y + 3}, info[0..2])
       # 2列目
-      _update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y + 2}, info[3..5])
+      update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y + 2}, info[3..5])
       # 3列目
-      _update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y + 1}, info[6..8])
+      update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y + 1}, info[6..8])
     when DOWN 
       # 1列目
-      _update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y - 3}, info[0..2])
+      update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y - 3}, info[0..2])
       # 2列目
-      _update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y - 2}, info[3..5])
+      update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y - 2}, info[3..5])
       # 3列目
-      _update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y - 1}, info[6..8])
+      update(lambda {|idx| @x - 1 + idx }, lambda {|idx| @y - 1}, info[6..8])
     end
   end
 
-  def _update_map_search(info, direction)
+  def update_map_search(info, direction)
     # searchコマンドの情報でマップを更新
     # direction: 方向
-    def _update(func_cell_x, func_cell_y, info)
+    def update(func_cell_x, func_cell_y, info)
       info.each_with_index do |celltype, idx|
         cell_x = func_cell_x.call(idx)
         cell_y = func_cell_y.call(idx)
@@ -114,13 +114,13 @@ class CHaser
 
     case direction
     when LEFT
-      _update(lambda {|idx| @x - 1 - idx}, lambda {|idx| @y}, info)
+      update(lambda {|idx| @x - 1 - idx}, lambda {|idx| @y}, info)
     when RIGHT
-      _update(lambda {|idx| @x + 1 + idx}, lambda {|idx| @y}, info)
+      update(lambda {|idx| @x + 1 + idx}, lambda {|idx| @y}, info)
     when UP
-      _update(lambda {|idx| @x}, lambda {|idx| @y + 1 + idx}, info)
+      update(lambda {|idx| @x}, lambda {|idx| @y + 1 + idx}, info)
     when DOWN
-      _update(lambda {|idx| @x}, lambda {|idx| @y - 1 - idx}, info)
+      update(lambda {|idx| @x}, lambda {|idx| @y - 1 - idx}, info)
     end
   end
 
@@ -134,7 +134,7 @@ class CHaser
   def getReady
     self.command('gr')
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
@@ -149,7 +149,7 @@ class CHaser
     self.command('wr')
     @x += 1
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
@@ -157,7 +157,7 @@ class CHaser
     self.command('wl')
     @x -= 1
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
@@ -165,7 +165,7 @@ class CHaser
     self.command('wu')
     @y += 1
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
@@ -173,7 +173,7 @@ class CHaser
     self.command('wd')
     @y -= 1
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
@@ -183,28 +183,28 @@ class CHaser
   def lookRight
     self.command('lr')
     info = self.receive_info
-    self._update_map_look(info, RIGHT)
+    self.update_map_look(info, RIGHT)
     return info
   end
 
   def lookLeft
     self.command('ll')
     info = self.receive_info
-    self._update_map_look(info, LEFT)
+    self.update_map_look(info, LEFT)
     return info
   end
 
   def lookUp
     self.command('lu')
     info = self.receive_info
-    self._update_map_look(info, UP)
+    self.update_map_look(info, UP)
     return info
   end
 
   def lookDown
     self.command('ld')
     info = self.receive_info
-    self._update_map_look(info, DOWN)
+    self.update_map_look(info, DOWN)
     return info
   end
 
@@ -214,28 +214,28 @@ class CHaser
   def searchRight
     self.command('sr')
     info = self.receive_info
-    self._update_map_search(info, RIGHT)
+    self.update_map_search(info, RIGHT)
     return info
   end
 
   def searchLeft
     self.command('sl')
     info = self.receive_info
-    self._update_map_search(info, LEFT)
+    self.update_map_search(info, LEFT)
     return info
   end
 
   def searchUp
     self.command('su')
     info = self.receive_info
-    self._update_map_search(info, UP)
+    self.update_map_search(info, UP)
     return info
   end
 
   def searchDown
     self.command('sd')
     info = self.receive_info
-    self._update_map_search(info, DOWN)
+    self.update_map_search(info, DOWN)
     return info
   end
 
@@ -245,28 +245,28 @@ class CHaser
   def putRight
     self.command('pr')
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
   def putLeft
     self.command('pl')
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
   def putUp
     self.command('pu')
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
   def putDown
     self.command('pd')
     info = self.receive_info
-    self._update_map_normal(info)
+    self.update_map_normal(info)
     return info
   end
 
@@ -278,9 +278,7 @@ class CHaser
       loop do
         begin
           buf = self.receive
-          if !buf.start_with?('@')
-            next
-          end
+          next if !buf.start_with?('@')
           # getReadyして周囲の情報を取得
           info = self.getReady
           # ターン情報更新

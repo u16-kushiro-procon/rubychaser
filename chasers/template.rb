@@ -2,7 +2,7 @@ require_relative 'active'
 
 # HogeCHaserの部分を自分の好きなように書き換える
 # ただし，頭文字は大文字
-class {Hoge}CHaser < ActiveCHaser
+class HogeCHaser < ActiveCHaser
   #---ユーザ定義関数---
 
   #--------------------

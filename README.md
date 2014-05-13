@@ -7,9 +7,8 @@ https://pypi.python.org/pypi/nullpobug.chaser をRubyで書いたものです．
 ##動作環境
 
 * ruby 2.0.0-p353
-* ruby 2.1.0-p0
-
-でしか試してません．
+* ruby 2.1.0
+* ruby 2.1.1
 
 ##簡単な使い方
 
@@ -30,7 +29,7 @@ end
 $ ruby main.rb --chaser=MyCHaser
 ```
 
--p オプションでポート番号を指定できます．他のオプションを確認するには，--help オプションを指定してください
+`-p` オプションでポート番号を指定できます．他のオプションを確認するには，`--help` オプションを指定してください
 
 ```Bash
 $ ruby main.rb --help
